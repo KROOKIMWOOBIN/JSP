@@ -1,0 +1,22 @@
+---------------------------------------------------------------
+KOSPI : http://data-dbg.krx.co.kr/svc/apis/idx/kospi_dd_trd
+---------------------------------------------------------------
+KOSDAQ : http://data-dbg.krx.co.kr/svc/apis/idx/kosdaq_dd_trd
+---------------------------------------------------------------
+KEY : 0CC858FDC3EE4C11857C1C67CC49F09EE41D0B4C
+---------------------------------------------------------------
+URL : http://openapi.krx.co.kr/contents/OPP/MAIN/main/index.cmd
+---------------------------------------------------------------
+번호	항목명	출력명	Data Type
+1	기준일자	BAS_DD	string()
+2	계열구분	IDX_CLSS	string()
+3	지수명	IDX_NM	string()
+4	종가	CLSPRC_IDX	string()
+5	대비	CMPPREVDD_IDX	string()
+6	등락률	FLUC_RT	string()
+7	시가	OPNPRC_IDX	string()
+8	고가	HGPRC_IDX	string()
+9	저가	LWPRC_IDX	string()
+10	거래량	ACC_TRDVOL	string()
+11	거래대금	ACC_TRDVAL	string()
+12	상장시가총액	MKTCAP	string()
