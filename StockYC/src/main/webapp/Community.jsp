@@ -54,60 +54,75 @@ function toggleContent(postId) {
         contentElement.style.display = "none";
     }
 }
+
 </script>
 </head>
 <body>
 <header>
 	<jsp:include page="Header.jsp"></jsp:include>
 </header>
-	<div style="display: flex; justify-content: center;">
-		<h2>글 목록</h2>
-		<ul style="margin-top: 50px">
-			<c:forEach var="post" items="${postList}">
-			    <li>${post.postId}. 제목: ${post.title} <br>작성자: ${post.userId} 
-			        <form method="get" action="postdelect.do">
-			            <input type="hidden" name="id" value="${post.postId}">
-			            <c:choose>
-			                <c:when test="${post.userId != idKey}">
-			                    <button style="margin-left: 40px" disabled>삭제</button>
-			                </c:when>
-			                <c:otherwise>
-			                    <button style="margin-left: 40px">삭제</button>
-			                </c:otherwise>
-			            </c:choose>
-			        </form>
-			        <form method="get" action="PostEdit.jsp">
-			            <c:choose>
-			                <c:when test="${post.userId != idKey}">
-			                    <button style="margin-left: 40px" disabled>수정</button>
-			                </c:when>
-			                <c:otherwise>
-			                    <button style="margin-left: 40px">수정</button>
-			                </c:otherwise>
-			            </c:choose>
-			            <input type="hidden" name="postId" value="${post.postId}">
-			            <input type="hidden" name="title" value="${post.title}">
-			            <input type="hidden" name="content" value="${post.content}">
-			        </form>
-			        <!-- 보기 버튼 -->
-			        <button onclick="toggleContent(${post.postId})" style="margin-left: 40px; width: 50px; height: 25px;">보기</button>
-			        <!-- 글 내용 -->
-			    </li>
-				<div id="content_${post.postId}" style="display: none;" class="content">
-				    ${post.content}
+	
+<div class="col-lg-12" style="display: flex; justify-content: center;">
+	<ol class="list-group list-group-numbered fw-bold">
+		<c:forEach var="post" items="${postList}">
+			<li class="list-group-item d-flex justify-content-between align-items-center mt-3">
+				<div class="ms-2 me-auto">
+					<div class="">제목: ${post.title}</div>
+					작성자: ${post.userId}
 				</div>
-			</c:forEach>
-		</ul>
-	</div>
+				<div class="d-flex align-items-center">
+					<form method="get" action="postdelect.do">
+						<input type="hidden" name="id" value="${post.postId}">
+						<c:choose>
+							<c:when test="${post.userId != idKey}">
+								<button class="btn btn-warning me-2 rounded-pill" disabled>삭제</button>
+							</c:when>
+							<c:otherwise>
+								<button class="btn btn-warning me-2 rounded-pill">삭제</button>
+							</c:otherwise>
+						</c:choose>
+					</form>
+					<form method="get" action="PostEdit.jsp">
+						<c:choose>
+							<c:when test="${post.userId != idKey}">
+								<button class="btn btn-warning me-2 rounded-pill" disabled>수정</button>
+							</c:when>
+							<c:otherwise>
+								<button class="btn btn-warning me-2 rounded-pill">수정</button>
+							</c:otherwise>
+						</c:choose>
+						<input type="hidden" name="postId" value="${post.postId}">
+						<input type="hidden" name="title" value="${post.title}">
+						<input type="hidden" name="content" value="${post.content}">
+					</form>
+					<button onclick="toggleContent(${post.postId})" class="btn btn-warning me-2 rounded-pill">내용 보기</button>
+				</div>
+			</li>
+			<div id="content_${post.postId}" style="display: none; width: 100%;" class="content">
+				<textarea class="form-control" rows="4" style="width: 100%;" readonly>${post.content}</textarea>
+			</div>
+		</c:forEach>
+	</ol>
+</div>
+
+	
 	<div id="center">
 		<c:choose>
 			<c:when test="${empty sessionScope.idKey}">
-				<span>로그인이 필요합니다. 로그인 후 이용해주세요.</span>
+				<div class="card pt-5 pb-5" style="width: 30rem; margin-top: 80px; margin-bottom: 80px;">
+				  <div class="card-body text-center">
+				    <h2 class="card-title mb-4">커뮤니티</h2><hr>
+				    <p class="card-text">로그인이 필요합니다.</p>
+				    <p class="card-text">로그인 후 이용 부탁드립니다.</p>
+				    <a href="Login.jsp"><button type="button" class="btn btn-warning me-2">Login</button></a>
+				    <a href="Register.jsp"><button type="button" class="btn btn-warning me-2">Sign-up</button></a>
+				  </div>
+				</div>
 			</c:when>
 			<c:otherwise>
-				<a href="Writing.jsp"><button>글 쓰기</button></a>
+				<a href="Writing.jsp"><button type="button" class="btn btn-warning me-2 mt-3">글 쓰기</button></a>
 				<form method="get" action="postselect.do">
-					<button style="margin-left: 10px">새로고침</button>
+					<button class="btn btn-warning me-2 mt-3">새로고침</button>
 				</form>
 			</c:otherwise>
 		</c:choose>

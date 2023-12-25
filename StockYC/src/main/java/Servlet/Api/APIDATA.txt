@@ -1,3 +1,4 @@
+http://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd
 ---------------------------------------------------------------
 KOSPI : http://data-dbg.krx.co.kr/svc/apis/idx/kospi_dd_trd
 ---------------------------------------------------------------
@@ -10,13 +11,29 @@ URL : http://openapi.krx.co.kr/contents/OPP/MAIN/main/index.cmd
 번호	항목명	출력명	Data Type
 1	기준일자	BAS_DD	string()
 2	계열구분	IDX_CLSS	string()
-3	지수명	IDX_NM	string()
-4	종가	CLSPRC_IDX	string()
-5	대비	CMPPREVDD_IDX	string()
-6	등락률	FLUC_RT	string()
+3	지수명	IDX_NM	string() o
+4	종가	CLSPRC_IDX	string() o
+5	대비	CMPPREVDD_IDX	string() o
+6	등락률	FLUC_RT	string() o
 7	시가	OPNPRC_IDX	string()
 8	고가	HGPRC_IDX	string()
 9	저가	LWPRC_IDX	string()
-10	거래량	ACC_TRDVOL	string()
+10	거래량	ACC_TRDVOL	string() o
 11	거래대금	ACC_TRDVAL	string()
 12	상장시가총액	MKTCAP	string()
+------------------------------------------------------------------
+BAS_DD	string()	기준일자
+ISU_CD	string()	종목코드
+ISU_NM	string()	종목명 o
+MKT_NM	string()	시장구분
+SECT_TP_NM	string()	소속부 
+TDD_CLSPRC	string()	종가 o
+CMPPREVDD_PRC	string()	대비 o
+FLUC_RT	string()	등락률 o
+TDD_OPNPRC	string()	시가
+TDD_HGPRC	string()	고가
+TDD_LWPRC	string()	저가
+ACC_TRDVOL	string()	거래량
+ACC_TRDVAL	string()	거래대금
+MKTCAP	string()	시가총액 o
+LIST_SHRS	string()	상장주식수

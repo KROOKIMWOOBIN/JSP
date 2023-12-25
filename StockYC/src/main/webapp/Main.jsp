@@ -34,57 +34,7 @@
         return true; // 입력 허용
     }
 </script>
-<c:set var="dataList" value="${cLSPRC_IDX}" />
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-      
-      function drawChart() {
-    	
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Kospi'],
-          ['2020',  1000],
-          ['2021',  1170],
-          ['2022',   660],
-          ['2023',  1030]
-        ]); 
-        
-        var options = {
-          title: 'Kospi',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
-
-        chart.draw(data, options);
-      }
-    </script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Kosdaq'],
-          ['2020',  900],
-          ['2021',  950],
-          ['2022',  1200],
-          ['2023',  1100]
-        ]);
-        
-        var options = {
-          title: 'Kosdaq',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart2'));
-
-        chart.draw(data, options);
-      }
-    </script>
 <style>
   table {
     width: 100%;
@@ -114,7 +64,11 @@
   .container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
+  }
+  #dayInput1 {
+    margin-top: 10px;
+    padding: 5px;
+    width: 200px;
   }
   #dayInput2 {
     margin-top: 10px;
@@ -133,177 +87,113 @@
 </style>
 </head>
 <body>
-   <main class="container">
-      <!-- 주요 증시 정보 -->
-	<div class="card my-3">
-		증권정보
-	</div>
-      <div style="display: flex; flex-direction: row; border: 1px solid #ccc;">
-		<div id="curve_chart1" style="width: 900px; height: 500px"></div>
-		<div id="curve_chart2" style="width: 900px; height: 500px"></div> 
-      </div>
-	<div class="card my-3">
-		상세검색 Kospi
-	</div>
-      <form method="get" action="kospi.do" onsubmit="return validateForm()" style="overflow: auto">
-		        <table>
-						<tr>
-					    	<th>기준일자</th>
-					    	<c:forEach items="${basDd}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>계열구분</th>
-					    	<c:forEach items="${iDX_CLSS}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
+<main class="container">
+	<div class="row">
+		<div class="col card">
+		    <form method="get" action="kospi.do" onsubmit="return validateForm()" style="overflow: auto">
+		    		<div style="display: flex; align-items: center; justify-content: space-between;">
+					    <h4 style="text-align: left;">일자별 코스피 지수</h4>
+					    <div style="display: flex; align-items: center;">
+					        <input type="text" class="form-control mb-3 me-3" id="dayInput1" placeholder="ex)20231212" name="day">
+					        <button class="btn btn-warning mb-1">
+					            검색
+					            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+					                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+					            </svg>
+					        </button>
+					    </div>
+					</div>
+		    	<table class="text-center table">
+		    		<thead class="table-dark">
 					    <tr>
-					    	<th>지수명</th>
-					    	<c:forEach items="${iDX_NM}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>종가</th>
-					    	<c:forEach items="${cLSPRC_IDX}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>대비</th>
-					    	<c:forEach items="${cMPPREVDD_IDX}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>등락률</th>
-					    	<c:forEach items="${fLUC_RT}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>시가</th>
-					    	<c:forEach items="${oPNPRC_IDX}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>고가</th>
-					    	<c:forEach items="${hGPRC_IDX}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>저가</th>
-					    	<c:forEach items="${lWPRC_IDX}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>거래량</th>
-					    	<c:forEach items="${aCC_TRDVOL}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>거래대금</th>
-					    	<c:forEach items="${aCC_TRDVAL}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>상장시가총액</th>
-					    	<c:forEach items="${mKTCAP}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-			        </table>
-			        <input type="text" id="dayInput1" name="day">
-			        <button type="submit">새로고침</button>
-			    </form>
-			    <div class="card my-3">
-					상세검색 Kosdaq
-				</div>
-			    <form method="get" action="kosdaq.do" onsubmit="return validateForm2()" style="overflow: auto">
-		        <table>
-						<tr>
-					    	<th>기준일자</th>
-					    	<c:forEach items="${basDd2}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>계열구분</th>
-					    	<c:forEach items="${iDX_CLSS2}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
+					        <th>기준일자</th>
+					        <th>지수명</th>
+					        <th>종가</th>
+					        <th>대비</th>
+					        <th>등락률</th>
+					        <th>거래량</th>
+					    </tr>
+				    </thead>
+				    <c:forEach items="${iDX_NM}" var="data" varStatus="loop" begin="0" end="9">
+				        <tr>
+				            <td><c:out value="${basDd2}" /></td>
+				            <td><c:out value="${iDX_NM[loop.index]}" /></td>
+				            <td><c:out value="${cLSPRC_IDX[loop.index]}" /></td>
+				            <td id="changeColor" style="color: black;"><c:out value="${cMPPREVDD_IDX[loop.index]}" /></td>
+				            <td id="changeColor" style="color: black;"><c:out value="${fLUC_RT[loop.index]}" /></td>
+				            <td><c:out value="${aCC_TRDVOL[loop.index]}" /></td>
+				        </tr>
+				    </c:forEach>
+				
+				    <script>
+				        var cells = document.querySelectorAll('#changeColor');
+				
+				        cells.forEach(function(cell) {
+				            var value = parseFloat(cell.innerHTML);
+				
+				            if (value > 0) {
+				                cell.style.color = 'red';
+				            } else if (value < 0) {
+				                cell.style.color = 'blue';
+				            }
+				        });
+				    </script>
+				</table>
+		    </form>
+		</div>
+		<div class="col card ms-3">
+		    <form method="get" action="kosdaqday.do" onsubmit="return validateForm2()" style="overflow: auto">
+		    		<div style="display: flex; align-items: center; justify-content: space-between;">
+					    <h4 style="text-align: left;">일자별 코스닥 순위</h4>
+					    <div style="display: flex; align-items: center;">
+					        <input type="text" class="form-control mb-3 me-3" id="dayInput2" placeholder="ex)20231212" name="day">
+					        <button class="btn btn-warning mb-1">
+					            검색
+					            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+					                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+					            </svg>
+					        </button>
+					    </div>
+					</div>
+		    	<table class="text-center table">
+		    		<thead class="table-dark">
 					    <tr>
-					    	<th>지수명</th>
-					    	<c:forEach items="${iDX_NM2}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>종가</th>
-					    	<c:forEach items="${cLSPRC_IDX2}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>대비</th>
-					    	<c:forEach items="${cMPPREVDD_IDX2}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>등락률</th>
-					    	<c:forEach items="${fLUC_RT2}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>시가</th>
-					    	<c:forEach items="${oPNPRC_IDX2}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>고가</th>
-					    	<c:forEach items="${hGPRC_IDX2}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>저가</th>
-					    	<c:forEach items="${lWPRC_IDX2}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>거래량</th>
-					    	<c:forEach items="${aCC_TRDVOL2}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>거래대금</th>
-					    	<c:forEach items="${aCC_TRDVAL2}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-						<tr>
-					    	<th>상장시가총액</th>
-					    	<c:forEach items="${mKTCAP2}" var="data">
-					            <td><c:out value="${data}" /></td>
-							</c:forEach>
-						</tr>
-			        </table>
-			        <input type="text" id="dayInput2" name="day">
-			        <button type="submit">새로고침</button>
-			    </form>
-   </main> 
+					        <th>기준일자</th>
+					        <th>종목명</th>
+					        <th>종가</th>
+					        <th>대비</th>
+					        <th>등락률</th>
+					        <th>시가총액</th>
+					    </tr>
+				    </thead>
+				    <c:forEach items="${iSU_NM2}" var="data" varStatus="loop" begin="0" end="9">
+				        <tr>
+				            <td><c:out value="${basDd2}" /></td>
+				            <td><c:out value="${iSU_NM2[loop.index]}" /></td>
+				            <td><c:out value="${tDD_CLSPRC2[loop.index]}" /></td>
+				            <td id="changeColor" style="color: black;"><c:out value="${cMPPREVDD_PRC2[loop.index]}" /></td>
+				            <td id="changeColor" style="color: black;"><c:out value="${fLUC_RT2[loop.index]}" /></td>
+				            <td><c:out value="${mKTCAP2[loop.index]}" /></td>
+				        </tr>
+				    </c:forEach>
+				
+				    <script>
+				        var cells = document.querySelectorAll('#changeColor');
+				
+				        cells.forEach(function(cell) {
+				            var value = parseFloat(cell.innerHTML);
+				
+				            if (value > 0) {
+				                cell.style.color = 'red';
+				            } else if (value < 0) {
+				                cell.style.color = 'blue';
+				            }
+				        });
+				    </script>
+				</table>
+		    </form>
+	    </div>
+    </div>
+</main>
 </body>
 </html>

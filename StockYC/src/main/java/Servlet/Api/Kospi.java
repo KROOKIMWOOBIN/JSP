@@ -31,17 +31,11 @@ public class Kospi extends HttpServlet {
         String url = "http://data-dbg.krx.co.kr/svc/apis/idx/kospi_dd_trd";
         String authKey = "0CC858FDC3EE4C11857C1C67CC49F09EE41D0B4C";
         
-        List<String> iDX_CLSS = new ArrayList<>();
         List<String> iDX_NM = new ArrayList<>();
         List<String> cLSPRC_IDX = new ArrayList<>();
         List<String> cMPPREVDD_IDX = new ArrayList<>();
         List<String> fLUC_RT = new ArrayList<>();
-        List<String> oPNPRC_IDX = new ArrayList<>();
-        List<String> hGPRC_IDX = new ArrayList<>();
-        List<String> lWPRC_IDX = new ArrayList<>();
         List<String> aCC_TRDVOL = new ArrayList<>();
-        List<String> aCC_TRDVAL = new ArrayList<>();
-        List<String> mKTCAP = new ArrayList<>();
         
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder()
@@ -65,9 +59,6 @@ public class Kospi extends HttpServlet {
         JsonNode outBlock1 = jsonNode.get("OutBlock_1");
         if (outBlock1.isArray()) {
             for (JsonNode object : outBlock1) {
-                String IDX_CLSS = object.get("IDX_CLSS").asText();
-                iDX_CLSS.add(IDX_CLSS);
-                
                 String IDX_NM = object.get("IDX_NM").asText();
                 iDX_NM.add(IDX_NM);
                 
@@ -80,40 +71,18 @@ public class Kospi extends HttpServlet {
                 String FLUC_RT = object.get("FLUC_RT").asText();
                 fLUC_RT.add(FLUC_RT);
                 
-                String OPNPRC_IDX = object.get("OPNPRC_IDX").asText();
-                oPNPRC_IDX.add(OPNPRC_IDX);
-                
-                String HGPRC_IDX = object.get("HGPRC_IDX").asText();
-                hGPRC_IDX.add(HGPRC_IDX);
-                
-                String LWPRC_IDX = object.get("LWPRC_IDX").asText();
-                lWPRC_IDX.add(LWPRC_IDX);
-                
                 String ACC_TRDVOL = object.get("ACC_TRDVOL").asText();
                 aCC_TRDVOL.add(ACC_TRDVOL);
-                
-                String ACC_TRDVAL = object.get("ACC_TRDVAL").asText();
-                aCC_TRDVAL.add(ACC_TRDVAL);
-                
-                String MKTCAP = object.get("MKTCAP").asText();
-                mKTCAP.add(MKTCAP);
             }
         }
-        
         response.setContentType("text/plain; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
-        request.setAttribute("basDd", basDd);
-        request.setAttribute("iDX_CLSS", iDX_CLSS);
+        request.setAttribute("basDd2", basDd);
         request.setAttribute("iDX_NM", iDX_NM);
         request.setAttribute("cLSPRC_IDX", cLSPRC_IDX);
         request.setAttribute("cMPPREVDD_IDX", cMPPREVDD_IDX);
         request.setAttribute("fLUC_RT", fLUC_RT);
-        request.setAttribute("oPNPRC_IDX", oPNPRC_IDX);
-        request.setAttribute("hGPRC_IDX", hGPRC_IDX);
-        request.setAttribute("lWPRC_IDX", lWPRC_IDX);
         request.setAttribute("aCC_TRDVOL", aCC_TRDVOL);
-        request.setAttribute("aCC_TRDVAL", aCC_TRDVAL);
-        request.setAttribute("mKTCAP", mKTCAP);
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("Index.jsp");
         dispatcher.forward(request, response);

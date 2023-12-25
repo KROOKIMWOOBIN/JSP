@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,26 +24,25 @@ public class Kosdaq extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+    	
     	request.setCharacterEncoding("UTF-8");
     	String basDd = request.getParameter("day") != null ? request.getParameter("day") : "20230615";
-        // KRX API 호출을 위한 URL, 인증키, 기준일자 설정
+        // KRX API 호출을 위한 URL, 인증키, 기준일자, 필요한 옵션 설정
         String url = "http://data-dbg.krx.co.kr/svc/apis/idx/kosdaq_dd_trd";
         String authKey = "0CC858FDC3EE4C11857C1C67CC49F09EE41D0B4C";
-
+        
         List<String> iDX_CLSS = new ArrayList<>();
-        List<String> iDX_NM = new ArrayList<>();
-        List<String> cLSPRC_IDX = new ArrayList<>();
-        List<String> cMPPREVDD_IDX = new ArrayList<>();
-        List<String> fLUC_RT = new ArrayList<>();
+        List<String> iDX_NM = new ArrayList<>(); 
+        List<String> cLSPRC_IDX = new ArrayList<>(); 
+        List<String> cMPPREVDD_IDX = new ArrayList<>(); 
+        List<String> fLUC_RT = new ArrayList<>(); 
         List<String> oPNPRC_IDX = new ArrayList<>();
         List<String> hGPRC_IDX = new ArrayList<>();
         List<String> lWPRC_IDX = new ArrayList<>();
-        List<String> aCC_TRDVOL = new ArrayList<>();
+        List<String> aCC_TRDVOL = new ArrayList<>(); 
         List<String> aCC_TRDVAL = new ArrayList<>();
         List<String> mKTCAP = new ArrayList<>();
-
-        // API 요청 보내기
+        
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .uri(URI.create(url + "?basDd=" + basDd))
@@ -56,7 +56,6 @@ public class Kosdaq extends HttpServlet {
             e.printStackTrace();
         }
 
-        // 응답 처리
         int statusCode = apiResponse.statusCode(); // API 응답 코드
         String responseBody = apiResponse.body(); // API 응답 데이터
         
@@ -103,20 +102,20 @@ public class Kosdaq extends HttpServlet {
         
         response.setContentType("text/plain; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
-        request.setAttribute("basDd2", basDd);
-        request.setAttribute("iDX_CLSS2", iDX_CLSS);
-        request.setAttribute("iDX_NM2", iDX_NM);
-        request.setAttribute("cLSPRC_IDX2", cLSPRC_IDX);
-        request.setAttribute("cMPPREVDD_IDX2", cMPPREVDD_IDX);
-        request.setAttribute("fLUC_RT2", fLUC_RT);
-        request.setAttribute("oPNPRC_IDX2", oPNPRC_IDX);
-        request.setAttribute("hGPRC_IDX2", hGPRC_IDX);
-        request.setAttribute("lWPRC_IDX2", lWPRC_IDX);
-        request.setAttribute("aCC_TRDVOL2", aCC_TRDVOL);
-        request.setAttribute("aCC_TRDVAL2", aCC_TRDVAL);
-        request.setAttribute("mKTCAP2", mKTCAP);
+        request.setAttribute("basDd", basDd);
+        request.setAttribute("iDX_CLSS", iDX_CLSS);
+        request.setAttribute("iDX_NM", iDX_NM);
+        request.setAttribute("cLSPRC_IDX", cLSPRC_IDX);
+        request.setAttribute("cMPPREVDD_IDX", cMPPREVDD_IDX);
+        request.setAttribute("fLUC_RT", fLUC_RT);
+        request.setAttribute("oPNPRC_IDX", oPNPRC_IDX);
+        request.setAttribute("hGPRC_IDX", hGPRC_IDX);
+        request.setAttribute("lWPRC_IDX", lWPRC_IDX);
+        request.setAttribute("aCC_TRDVOL", aCC_TRDVOL);
+        request.setAttribute("aCC_TRDVAL", aCC_TRDVAL);
+        request.setAttribute("mKTCAP", mKTCAP);
         
-		RequestDispatcher dispatcher = request.getRequestDispatcher("Index.jsp");
-		dispatcher.forward(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("Index.jsp");
+        dispatcher.forward(request, response);
     }
 }
